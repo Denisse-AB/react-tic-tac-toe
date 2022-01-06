@@ -1,5 +1,6 @@
 import React from 'react';
 import './index.css';
+import Button from 'react-bootstrap/Button';
 
 function Square(props) {
   return (
@@ -112,7 +113,14 @@ class Game extends React.Component {
         'Go to game start';
       return (
         <li key={move}>
-          <button onClick={() => this.jumpTo(move)}>{desc}</button>
+          <Button
+            size="sm"
+            variant="warning"
+            className="my-1"
+            onClick={() => this.jumpTo(move)}
+          >
+            {desc}
+          </Button>
         </li>
       );
     });
@@ -126,16 +134,19 @@ class Game extends React.Component {
     }
 
     return (
-      <div className="game">
-        <div className="game-board">
-          <Board
-            squares={current.squares}
-            onClick={(i) => this.handleClick(i)}
-          />
-        </div>
-        <div className="game-info">
-          <div>{status}</div>
-          <ol>{moves}</ol>
+      <div>
+        <h1 className="header mb-3">Tic Tac Toe</h1>
+        <div className="game">
+          <div className="game-board">
+            <Board
+              squares={current.squares}
+              onClick={(i) => this.handleClick(i)}
+            />
+          </div>
+          <div className="game-info">
+            <div className='status-text'>{status}</div>
+            <ol>{moves}</ol>
+          </div>
         </div>
       </div>
     );
