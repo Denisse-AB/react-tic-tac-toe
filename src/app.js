@@ -1,6 +1,11 @@
+// Add a toggle button that lets you sort the moves in either ascending or descending order.
+// When someone wins, highlight the three squares that caused the win.
+// When no one wins, display a message about the result being a draw.
+
 import React from 'react';
 import './index.css';
 import Button from 'react-bootstrap/Button';
+import Table from 'react-bootstrap/Table';
 
 function Square(props) {
   return (
@@ -11,6 +16,64 @@ function Square(props) {
       {props.value}
     </button>
   );
+}
+
+function Count(props) {
+  return (
+    // TODO: loop or map rows
+    <Table striped bordered hover>
+      <thead>
+        <tr>
+          <th>
+            <Button
+              variant="link"
+              className='text-decoration-none'
+            >#
+            </Button>
+          </th>
+          <th> History</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr className='margin'>
+          <td>0</td>
+          <td>{props.squares[0]}</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>{props.squares[1]}</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>{props.squares[2]}</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>{props.squares[3]}</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>{props.squares[4]}</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>{props.squares[5]}</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>{props.squares[6]}</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td>{props.squares[7]}</td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td>{props.squares[8]}</td>
+        </tr>
+      </tbody>
+    </Table>
+  )
 }
 
 function calculateWinner(squares) {
@@ -27,7 +90,7 @@ function calculateWinner(squares) {
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
+      return {squares: squares[a], win: [a, b ,c]};
     }
   }
   return null;
@@ -37,6 +100,7 @@ class Board extends React.Component {
   renderSquare(i) {
     return (
       <Square
+        key={i}
         value={this.props.squares[i]}
         onClick={() => this.props.onClick(i)}
       />
@@ -45,24 +109,19 @@ class Board extends React.Component {
 
   render() {
     return (
+      // TODO: Conditional render, pass winner
       <div>
-        <div className="board-row">
-          {this.renderSquare(0)}
-          {this.renderSquare(1)}
-          {this.renderSquare(2)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(3)}
-          {this.renderSquare(4)}
-          {this.renderSquare(5)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(6)}
-          {this.renderSquare(7)}
-          {this.renderSquare(8)}
-        </div>
+        {[0, 1, 2].map(i => {
+          return (
+            <div className="board-row" key={i}>
+              {[0, 1, 2].map(r => {
+                return this.renderSquare(3 * i + r)
+              })}
+            </div>
+          );
+        })}
       </div>
-    );
+    )
   }
 }
 
@@ -94,7 +153,9 @@ class Game extends React.Component {
     }
     squares[i] = this.state.xIsNext ? 'X' : 'O'; // Ternary op.
     this.setState({
-      history: history.concat([{ // concat() method doesn’t mutate the original array
+      // instead of push use concat()
+      // this method doesn’t mutate the original array
+      history: history.concat([{
         squares: squares,
       }]),
       stepNumber: history.length,
@@ -128,15 +189,18 @@ class Game extends React.Component {
     let status;
 
     if (winner) {
-      status = 'Winner: ' + winner;
+      status = 'Winner: ' + winner.squares;
     } else {
       status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
     }
 
     return (
       <div>
-        <h1 className="header mb-3">Tic Tac Toe</h1>
+        <h1 className="header mb-4">{status}</h1>
         <div className="game">
+          <Count
+            squares={current.squares}
+          />
           <div className="game-board">
             <Board
               squares={current.squares}
@@ -144,7 +208,7 @@ class Game extends React.Component {
             />
           </div>
           <div className="game-info">
-            <div className='status-text'>{status}</div>
+            {/* <div className='status-text'>{status}</div> */}
             <ol>{moves}</ol>
           </div>
         </div>
