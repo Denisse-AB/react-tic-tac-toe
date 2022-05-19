@@ -3,9 +3,12 @@ body {
   margin: 20px;
   background-color: #dee2e67a !important;
 }
-h1.header {
-  margin-left: 35%;
-  margin-top: 170px;
+
+.header-div {
+  border: solid 3px red;
+  width: fit-content;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 ol, ul {
@@ -37,7 +40,7 @@ table {
 
 .square {
   background: #fff;
-  border: 1px solid #999;
+  border: 5px solid #999;
   float: left;
   font-size: 24px;
   font-weight: bold;

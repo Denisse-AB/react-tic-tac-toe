@@ -1,11 +1,7 @@
 // Add a toggle button that lets you sort the moves in either ascending or descending order.
 // When someone wins, highlight the three squares that caused the win.
-// When no one wins, display a message about the result being a draw.
-
 import React from 'react';
 import './index.css';
-import Button from 'react-bootstrap/Button';
-import Table from 'react-bootstrap/Table';
 
 function Square(props) {
   return (
@@ -20,59 +16,30 @@ function Square(props) {
 
 function Count(props) {
   return (
-    // TODO: loop or map rows
-    <Table striped bordered hover>
+    <table>
       <thead>
         <tr>
           <th>
-            <Button
+            <button
               variant="link"
               className='text-decoration-none'
             >#
-            </Button>
+            </button>
           </th>
           <th> History</th>
         </tr>
       </thead>
       <tbody>
-        <tr className='margin'>
-          <td>0</td>
-          <td>{props.squares[0]}</td>
-        </tr>
-        <tr>
-          <td>1</td>
-          <td>{props.squares[1]}</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>{props.squares[2]}</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>{props.squares[3]}</td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>{props.squares[4]}</td>
-        </tr>
-        <tr>
-          <td>5</td>
-          <td>{props.squares[5]}</td>
-        </tr>
-        <tr>
-          <td>6</td>
-          <td>{props.squares[6]}</td>
-        </tr>
-        <tr>
-          <td>7</td>
-          <td>{props.squares[7]}</td>
-        </tr>
-        <tr>
-          <td>8</td>
-          <td>{props.squares[8]}</td>
-        </tr>
+        {
+          [0, 1, 2, 4, 5, 6, 7, 8].map((i) =>
+            <tr className='margin' key={i}>
+              <td>{i}</td>
+              <td>{props.squares[i]}</td>
+            </tr>
+          )
+        }
       </tbody>
-    </Table>
+    </table>
   )
 }
 
@@ -90,6 +57,7 @@ function calculateWinner(squares) {
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      console.log(squares[a], [a, b, c]);
       return {squares: squares[a], win: [a, b ,c]};
     }
   }
@@ -109,7 +77,6 @@ class Board extends React.Component {
 
   render() {
     return (
-      // TODO: Conditional render, pass winner
       <div>
         {[0, 1, 2].map(i => {
           return (
@@ -167,21 +134,21 @@ class Game extends React.Component {
     const history = this.state.history;
     const current = history[history.length - 1];
     const winner = calculateWinner(current.squares);
-
+    console.log(winner);
     const moves = history.map((step, move) => {
       const desc = move ?
         'Go to move #' + move :
         'Go to game start';
       return (
         <li key={move}>
-          <Button
+          <button
             size="sm"
             variant="warning"
             className="my-1"
             onClick={() => this.jumpTo(move)}
           >
             {desc}
-          </Button>
+          </button>
         </li>
       );
     });
@@ -190,19 +157,24 @@ class Game extends React.Component {
 
     if (winner) {
       status = 'Winner: ' + winner.squares;
+    } else if (this.state.xIsNext === false && this.state.stepNumber === 9) {
+      status = 'Draw';
     } else {
       status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
     }
 
     return (
       <div>
-        <h1 className="header mb-4">{status}</h1>
+        <div className='header-div'>
+          <h1>{status}</h1>
+        </div>
         <div className="game">
           <Count
             squares={current.squares}
           />
           <div className="game-board">
             <Board
+              // TODO: PASS COLOR OF WINNERS
               squares={current.squares}
               onClick={(i) => this.handleClick(i)}
             />
