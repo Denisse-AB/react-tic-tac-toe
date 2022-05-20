@@ -4,13 +4,6 @@ body {
   background-color: #dee2e67a !important;
 }
 
-.header-div {
-  border: solid 3px red;
-  width: fit-content;
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
 ol, ul {
   padding-left: 30px;
 }
@@ -34,13 +27,33 @@ table {
   display: table;
 }
 
+button.square[data-pro="X"] {
+  color: rgb(67, 26, 65);
+}
+
+button.square[data-pro="O"] {
+  color: blue;
+}
+
+.square-winning {
+  background: #3ad33a !important;
+}
+
+.header-div {
+  border: solid 3px red;
+  width: fit-content;
+  padding: 10px;
+  /* padding-left: 10px;
+  padding-right: 10px; */
+}
+
 .status {
   margin-bottom: 10px;
 }
 
 .square {
   background: #fff;
-  border: 5px solid #999;
+  border: 1px solid #999;
   float: left;
   font-size: 24px;
   font-weight: bold;
@@ -63,6 +76,7 @@ table {
 
 .game {
   margin-left: 20%;
+  padding: 20px;
   display: flex;
   flex-direction: row;
 }

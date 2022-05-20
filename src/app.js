@@ -1,12 +1,13 @@
 // Add a toggle button that lets you sort the moves in either ascending or descending order.
-// When someone wins, highlight the three squares that caused the win.
 import React from 'react';
 import './index.css';
 
 function Square(props) {
   return (
     <button
-      className="square"
+      // append true of false to this class if the square is in the winners array
+      className={"square " + (props.ifWinner ? "square-winning" : null) }
+      data-pro={props.value}
       onClick={() => props.onClick()}
     >
       {props.value}
@@ -57,7 +58,6 @@ function calculateWinner(squares) {
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      console.log(squares[a], [a, b, c]);
       return {squares: squares[a], win: [a, b ,c]};
     }
   }
@@ -68,7 +68,8 @@ class Board extends React.Component {
   renderSquare(i) {
     return (
       <Square
-        key={i}
+        key={'square ' + i}
+        ifWinner={this.props.winnerArray.includes(i) }
         value={this.props.squares[i]}
         onClick={() => this.props.onClick(i)}
       />
@@ -134,7 +135,7 @@ class Game extends React.Component {
     const history = this.state.history;
     const current = history[history.length - 1];
     const winner = calculateWinner(current.squares);
-    console.log(winner);
+
     const moves = history.map((step, move) => {
       const desc = move ?
         'Go to move #' + move :
@@ -154,9 +155,11 @@ class Game extends React.Component {
     });
 
     let status;
+    let winnerValues;
 
     if (winner) {
       status = 'Winner: ' + winner.squares;
+      winnerValues = winner.win;
     } else if (this.state.xIsNext === false && this.state.stepNumber === 9) {
       status = 'Draw';
     } else {
@@ -174,13 +177,12 @@ class Game extends React.Component {
           />
           <div className="game-board">
             <Board
-              // TODO: PASS COLOR OF WINNERS
+              winnerArray={winnerValues ? winnerValues : []}
               squares={current.squares}
               onClick={(i) => this.handleClick(i)}
             />
           </div>
           <div className="game-info">
-            {/* <div className='status-text'>{status}</div> */}
             <ol>{moves}</ol>
           </div>
         </div>
