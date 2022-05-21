@@ -32,7 +32,7 @@ button.square[data-pro="X"] {
 }
 
 button.square[data-pro="O"] {
-  color: blue;
+  color: #26278d;
 }
 
 .square-winning {
@@ -40,9 +40,11 @@ button.square[data-pro="O"] {
 }
 
 .header-div {
-  border: solid 3px red;
+  border: solid 3px rgb(147, 173, 176);
+  border-radius: 5px;
   width: fit-content;
   padding: 10px;
+  background: white;
   /* padding-left: 10px;
   padding-right: 10px; */
 }
