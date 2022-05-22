@@ -1,7 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
+
 body {
   font: 14px "Century Gothic", Futura, sans-serif;
   margin: 20px;
-  background-color: #dee2e67a !important;
+  background-image: url('/images/dice.jpg');
 }
 
 ol, ul {
@@ -39,20 +44,6 @@ button.square[data-pro="O"] {
   background: #3ad33a !important;
 }
 
-.header-div {
-  border: solid 3px rgb(147, 173, 176);
-  border-radius: 5px;
-  width: fit-content;
-  padding: 10px;
-  background: white;
-  /* padding-left: 10px;
-  padding-right: 10px; */
-}
-
-.status {
-  margin-bottom: 10px;
-}
-
 .square {
   background: #fff;
   border: 1px solid #999;
@@ -74,20 +65,4 @@ button.square[data-pro="O"] {
 
 .kbd-navigation .square:focus {
   background: #ddd;
-}
-
-.game {
-  margin-left: 20%;
-  padding: 20px;
-  display: flex;
-  flex-direction: row;
-}
-
-.game-info {
-  margin-left: 20px;
-}
-
-.status-text {
-  font-size: large;
-  margin-bottom: 10px;
 }

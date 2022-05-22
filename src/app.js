@@ -22,31 +22,31 @@ function Count(props) {
   const handleSort = () => setSort(!sort)
 
   return (
-    <table>
+    <table className='text-white text-base'>
       <thead>
-        <tr>
+        <tr className='border border-slate-400'>
           <th>
             <button
               variant="link"
-              className='text-decoration-none'
+              className='text-decoration-none px-2'
               onClick={handleSort}
             >#
             </button>
           </th>
-          <th> History</th>
+          <th><p className='px-5 font-extrabold'>History</p></th>
         </tr>
       </thead>
       <tbody>
         {
           sort ?
             tableRows.reverse().map((i) =>
-            <tr className='margin' key={i}>
+            <tr className='margin text-white font-bold' key={i}>
               <td>{i}</td>
               <td>{props.squares[i]}</td>
             </tr>
           ) :
           tableRows.map((i) =>
-            <tr className='margin' key={i}>
+            <tr className='margin text-white font-bold' key={i}>
               <td>{i}</td>
               <td>{props.squares[i]}</td>
             </tr>
@@ -91,7 +91,7 @@ class Board extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className='mr-8'>
         {[0, 1, 2].map(i => {
           return (
             <div className="board-row" key={i}>
@@ -162,13 +162,13 @@ class Game extends React.Component {
     const moves = history.map((step, move) => {
       const desc = move ?
         'Go to move #' + move :
-        'Go to game start';
+        'Go to start';
       return (
         <li key={move}>
           <button
             size="sm"
             variant="warning"
-            className="my-1"
+            className="my-1 bg-white hover:bg-gray-200 text-gray-800 font-semibold py-1 px-4 border border-gray-400 rounded shadow"
             onClick={() => this.jumpTo(move)}
           >
             {desc}
@@ -191,25 +191,33 @@ class Game extends React.Component {
 
     return (
       <div>
-        <div className='header-div'>
-          <h1>{status}</h1>
+        <div className='mx-auto md:mx-0 border bg-white rounded border-4 border-blue-gray w-fit p-3'>
+          <h1 className='font-header text-2xl'>{status}</h1>
         </div>
-        <div className="game">
-          <Count
-            squares={current.squares}
-          />
-          <div className="game-board">
-            <Board
-              winnerArray={winnerValues ? winnerValues : []}
-              squares={current.squares}
-              onClick={(i) => this.handleClick(i)}
-            />
-          </div>
-          <div className="game-info">
-            <ol>{this.state.isDescending ? moves : moves.reverse()}</ol>
-            <button onClick={() => this.sortHistory()}>
-              Sort by: {this.state.isDescending ? "Descending" : "Asending"}
-            </button>
+        <div className="max-w-md mx-auto overflow-hidden md:max-w-2xl">
+          <div className="md:flex ml-8 md:ml-0">
+            <div className="md:shrink-0">
+              <div className='m-8 portrait:hidden'>
+                <Count
+                  squares={current.squares}
+                />
+              </div>
+            </div>
+            <div className='m-8'>
+              <Board
+                winnerArray={winnerValues ? winnerValues : []}
+                squares={current.squares}
+                onClick={(i) => this.handleClick(i)}
+              />
+            </div>
+            <div className='mt-8'>
+              <ol>{this.state.isDescending ? moves : moves.reverse()}</ol>
+              <button
+                className="ml-7 my-1 bg-white hover:bg-gray-200 text-gray-800 font-semibold py-1 px-4 border border-gray-400 rounded shadow"
+                onClick={() => this.sortHistory()}>
+                Sort: {this.state.isDescending ? "Descending" : "Asending"}
+              </button>
+            </div>
           </div>
         </div>
       </div>
