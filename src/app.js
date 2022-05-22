@@ -1,4 +1,3 @@
-// Add a toggle button that lets you sort the moves in either ascending or descending order.
 import React, { useState } from 'react';
 import './index.css';
 
@@ -141,11 +140,11 @@ class Game extends React.Component {
       return;
     }
 
-    squares[i] = this.state.xIsNext ? 'X' : 'O'; // Ternary op.
+    squares[i] = this.state.xIsNext ? 'X' : 'O';
 
     this.setState({
-      // instead of push use concat()
-      // this method doesn’t mutate the original array
+      // instead of push use concat() or create new obj
+      // this method will re-render the dom
       history: history.concat([{
         squares: squares,
       }]),
