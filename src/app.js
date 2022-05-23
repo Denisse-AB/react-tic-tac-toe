@@ -2,6 +2,7 @@ import React from 'react';
 import Square from './components/square';
 import Count from './components/count';
 import { calculateWinner } from './components/winners';
+import { Helmet } from 'react-helmet';
 import './index.css';
 
 class Board extends React.Component {
@@ -118,6 +119,21 @@ class Game extends React.Component {
 
     return (
       <div>
+        <Helmet>
+          <meta charSet="utf-8" />
+          <title>Tic Tac Toe</title>
+          <meta
+            name="description"
+            content="React tic tac toe tutorial"
+          />
+          <meta name="twitter:card" content="summary" />
+          <meta name="twitter:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Tic_tac_toe.svg/300px-Tic_tac_toe.svg.png" />
+          <meta property="og:title" content="React Tic Tac Toe" />
+          <meta property="og:type" content="game" />
+          <meta property="og:description" content="React tic tac toe tutorial." />
+          <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Tic_tac_toe.svg/300px-Tic_tac_toe.svg.png" />
+          <meta property="og:url" content="https://denisse-ab.github.io/react-tic-tac-toe/" />
+        </Helmet>
         <div className='mx-auto md:mx-0 border bg-white rounded border-4 border-blue-gray w-fit p-3'>
           <h1 className='font-header text-2xl'>{status}</h1>
         </div>
