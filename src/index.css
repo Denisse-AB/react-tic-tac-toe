@@ -19,25 +19,18 @@ td, th {
   text-align: center;
 }
 
-table {
-  padding: 0 !important;
-  width: 15% !important;
-  margin-left: 15px;
-  margin-right: 30px;
-}
-
-.board-row:after {
-  clear: both;
-  content: "";
-  display: table;
-}
-
 button.square[data-pro="X"] {
   color: rgb(67, 26, 65);
 }
 
 button.square[data-pro="O"] {
   color: #26278d;
+}
+
+.board-row:after {
+  clear: both;
+  content: "";
+  display: table;
 }
 
 .square-winning {

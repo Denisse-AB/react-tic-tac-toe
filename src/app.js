@@ -1,80 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
+import Square from './components/square';
+import Count from './components/count';
+import { calculateWinner } from './components/winners';
 import './index.css';
-
-function Square(props) {
-  return (
-    <button
-      // append true of false to this class if the square is in the winners array
-      className={"square " + (props.ifWinner ? "square-winning" : null) }
-      data-pro={props.value}
-      onClick={() => props.onClick()}
-    >
-      {props.value}
-    </button>
-  );
-}
-
-function Count(props) {
-  const tableRows = [0, 1, 2, 3, 4, 5, 6, 7, 8];
-  const [sort, setSort] = useState(false);
-
-  const handleSort = () => setSort(!sort)
-
-  return (
-    <table className='text-white text-base'>
-      <thead>
-        <tr className='border border-slate-400'>
-          <th>
-            <button
-              variant="link"
-              className='text-decoration-none px-2'
-              onClick={handleSort}
-            >#
-            </button>
-          </th>
-          <th><p className='px-5 font-extrabold'>History</p></th>
-        </tr>
-      </thead>
-      <tbody>
-        {
-          sort ?
-            tableRows.reverse().map((i) =>
-            <tr className='margin text-white font-bold' key={i}>
-              <td>{i}</td>
-              <td>{props.squares[i]}</td>
-            </tr>
-          ) :
-          tableRows.map((i) =>
-            <tr className='margin text-white font-bold' key={i}>
-              <td>{i}</td>
-              <td>{props.squares[i]}</td>
-            </tr>
-          )
-        }
-      </tbody>
-    </table>
-  )
-}
-
-function calculateWinner(squares) {
-  const lines = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ];
-  for (let i = 0; i < lines.length; i++) {
-    const [a, b, c] = lines[i];
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return {squares: squares[a], win: [a, b ,c]};
-    }
-  }
-  return null;
-}
 
 class Board extends React.Component {
   renderSquare(i) {
@@ -196,25 +124,25 @@ class Game extends React.Component {
         <div className="max-w-md mx-auto overflow-hidden md:max-w-2xl">
           <div className="md:flex ml-8 md:ml-0">
             <div className="md:shrink-0">
-              <div className='m-8 portrait:hidden'>
+              <div className='m-8 portrait:hidden tablet:hidden'>
                 <Count
                   squares={current.squares}
                 />
               </div>
             </div>
-            <div className='m-8'>
+            <div className='m-8 portrait:m-14'>
               <Board
                 winnerArray={winnerValues ? winnerValues : []}
                 squares={current.squares}
                 onClick={(i) => this.handleClick(i)}
               />
             </div>
-            <div className='mt-8'>
+            <div className='mt-8 portrait:m-6'>
               <ol>{this.state.isDescending ? moves : moves.reverse()}</ol>
               <button
                 className="ml-7 my-1 bg-white hover:bg-gray-200 text-gray-800 font-semibold py-1 px-4 border border-gray-400 rounded shadow"
                 onClick={() => this.sortHistory()}>
-                Sort: {this.state.isDescending ? "Descending" : "Asending"}
+                {this.state.isDescending ? "Descending" : "Asending"}
               </button>
             </div>
           </div>
