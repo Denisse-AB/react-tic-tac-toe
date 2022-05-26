@@ -1,38 +1,11 @@
 import React from 'react';
-import Square from './components/square';
+import Board from './components/board';
 import Count from './components/count';
+import ScoreCard from './components/score-card';
 import { calculateWinner } from './components/winners';
 import { Helmet } from 'react-helmet';
 import './index.css';
 
-class Board extends React.Component {
-  renderSquare(i) {
-    return (
-      <Square
-        key={'square ' + i}
-        ifWinner={this.props.winnerArray.includes(i) }
-        value={this.props.squares[i]}
-        onClick={() => this.props.onClick(i)}
-      />
-    );
-  }
-
-  render() {
-    return (
-      <div className='mr-8'>
-        {[0, 1, 2].map(i => {
-          return (
-            <div className="board-row" key={i}>
-              {[0, 1, 2].map(r => {
-                return this.renderSquare(3 * i + r)
-              })}
-            </div>
-          );
-        })}
-      </div>
-    )
-  }
-}
 
 class Game extends React.Component {
   constructor(props) {
@@ -95,7 +68,6 @@ class Game extends React.Component {
         <li key={move}>
           <button
             size="sm"
-            variant="warning"
             className="my-1 bg-white hover:bg-gray-200 text-gray-800 font-semibold py-1 px-4 border border-gray-400 rounded shadow"
             onClick={() => this.jumpTo(move)}
           >
@@ -107,10 +79,12 @@ class Game extends React.Component {
 
     let status;
     let winnerValues;
+    let winnerMark;
 
     if (winner) {
       status = 'Winner: ' + winner.squares;
       winnerValues = winner.win;
+      winnerMark = winner.squares;
     } else if (this.state.xIsNext === false && this.state.stepNumber === 9) {
       status = 'Draw';
     } else {
@@ -130,8 +104,14 @@ class Game extends React.Component {
         <div className='mx-auto md:mx-0 border bg-white rounded border-4 border-blue-gray w-fit p-3'>
           <h1 className='font-header text-2xl'>{status}</h1>
         </div>
+        <div className='flex mx-auto md:mx-0 border bg-white rounded border-4 border-blue-gray w-fit p-3 mt-3'>
+          <ScoreCard
+            winner={winner ? true : false}
+            mark={winnerMark}
+          />
+        </div>
         <div className="max-w-md mx-auto overflow-hidden md:max-w-2xl">
-          <div className="md:flex ml-8 md:ml-0">
+          <div className="md:flex ml-8 md:ml-0 tablet:ml-[100px]">
             <div className="md:shrink-0">
               <div className='m-8 portrait:hidden tablet:hidden'>
                 <Count

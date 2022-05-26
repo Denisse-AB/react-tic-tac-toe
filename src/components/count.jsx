@@ -19,7 +19,11 @@ const Count = (props) => {
             >{sort ? 'Λ' : 'V'}
             </button>
           </th>
-          <th><p className='px-5 font-extrabold'>History</p></th>
+          <th>
+            <p className='px-5 font-extrabold'>
+              History
+            </p>
+          </th>
         </tr>
       </thead>
       <tbody>
