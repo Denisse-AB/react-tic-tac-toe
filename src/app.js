@@ -119,14 +119,14 @@ class Game extends React.Component {
                 />
               </div>
             </div>
-            <div className='m-8 portrait:m-14'>
+            <div className='m-8 portrait:m-14 md:portrait:ml-44'>
               <Board
                 winnerArray={winnerValues ? winnerValues : []}
                 squares={current.squares}
                 onClick={(i) => this.handleClick(i)}
               />
             </div>
-            <div className='mt-8 portrait:m-6'>
+            <div className='mt-8 portrait:m-6 sm:portrait:ml-8 md:portrait:mt-12'>
               <ol>{this.state.isDescending ? moves : moves.reverse()}</ol>
               <button
                 className="ml-7 my-1 bg-white hover:bg-gray-200 text-gray-800 font-semibold py-1 px-4 border border-gray-400 rounded shadow"
