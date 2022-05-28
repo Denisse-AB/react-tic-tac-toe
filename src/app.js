@@ -111,7 +111,7 @@ class Game extends React.Component {
           />
         </div>
         <div className="max-w-md mx-auto overflow-hidden md:max-w-2xl">
-          <div className="md:flex ml-8 md:ml-0 tablet:ml-[100px]">
+          <div className="md:flex ml-8 md:ml-0 tablet:ml-[90px]">
             <div className="md:shrink-0">
               <div className='m-8 portrait:hidden tablet:hidden'>
                 <Count
